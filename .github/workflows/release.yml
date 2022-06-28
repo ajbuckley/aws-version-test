@@ -23,6 +23,10 @@ jobs:
         id: version
         run: |
           echo "${{ steps.pr.outputs.labels }}"
+          git config --global user.name 'ajbuckley'
+          git config --global user.email 'dbuckley@users.noreply.github.com'
+          git pull --rebase=false origin main
+          
           ./version.sh "${{ steps.pr.outputs.labels }}"
           git add -A
           git commit -m "Bumping version for release [skip actions]"
