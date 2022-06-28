@@ -1,0 +1,25 @@
+name: Zeus Constructs Library Release
+concurrency: "zeus-constructs-release"
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get Merged PR Labels
+        id: pr
+        uses: actions-ecosystem/action-get-merged-pull-request@v1.0.1
+      - name: Version
+        id: version
+        run: |
+          echo "${{ steps.pr.outputs.labels }}"
+          ./version.sh "${{ steps.pr.outputs.labels }}"
+          git add -A
+          git commit -m "Bumping version for release [skip actions]"
+          git push
+          npm publish
+        working-directory: ./
