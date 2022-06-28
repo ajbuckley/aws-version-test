@@ -4,7 +4,7 @@
 
 	<groupId>ajbuckley.awsversiontest</groupId>
 	<artifactId>aws-version-test</artifactId>
-	<version>patch</version>
+	<version>test</version>
 	<packaging>pom</packaging>
 
 	<name>Aws Version Test</name>
