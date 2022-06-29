@@ -1,0 +1,44 @@
+name: Release creation
+concurrency: "release"
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    if: contains(github.event.label.name, 'release')
+    steps:
+      - name: Get Merged PR Labels
+        id: pr
+        uses: actions-ecosystem/action-get-merged-pull-request@v1.0.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get version
+        run: |
+          VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
+          echo "::set-output name=version::$VERSION"
+        id: get_version
+      - name: Print version
+        run: |
+          echo "${{ steps.get_version.outputs.version }}"
+      - name: create github release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: Test-Repo ${{ steps.get_version.outputs.version }}
+          body: >
+            ## ${{ steps.pr.outputs.title }}
+            ${{ steps.pr.outputs.body }}
+            Pull Request: \#${{ steps.pr.outputs.number }}
+          draft: false
+          prerelease: false
+          commitish: ${{ steps.publish.outputs.latest-commit }}
+      - name: Print release url
+        run: |
+          echo "${{ steps.create_release.outputs.html_url }}"
