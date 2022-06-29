@@ -8,12 +8,12 @@
 
 case "$1" in
   *major-release*)
-    mvn versions:set -DnewVersion=major
+    mvn mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion}
     ;;
   *minor-release*)
-    mvn versions:set -DnewVersion=minor
+    mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.\${parsedVersion.incrementalVersion}
     ;;
   *)
-    mvn versions:set -DnewVersion=patch
+    mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}
     ;;
 esac
