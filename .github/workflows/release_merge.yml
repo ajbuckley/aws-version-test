@@ -1,5 +1,5 @@
-name: Maven Version on release
-concurrency: "maven-version"
+name: Release creation
+concurrency: "release"
 on:
   push:
     branches:
