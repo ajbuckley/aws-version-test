@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    if: contains(github.event.label.name, 'release')
     steps:
       - name: Get Merged PR Labels
         id: pr
@@ -21,10 +20,8 @@ jobs:
           VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
           echo "::set-output name=version::$VERSION"
         id: get_version
-      - name: Print version
-        run: |
-          echo "${{ steps.get_version.outputs.version }}"
       - name: create github release
+        if: contains(steps.pr.outputs.labels, 'release')
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -40,5 +37,6 @@ jobs:
           prerelease: false
           commitish: ${{ steps.publish.outputs.latest-commit }}
       - name: Print release url
+        if: contains(steps.pr.outputs.labels, 'release')
         run: |
           echo "${{ steps.create_release.outputs.html_url }}"
