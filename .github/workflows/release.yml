@@ -24,7 +24,7 @@ jobs:
           echo "${{ github.event.label.name }}"
           git config --global user.name 'ajbuckley'
           git config --global user.email 'dbuckley@users.noreply.github.com'
-          git pull ${{ github.head_ref }}
+          git pull --rebase=false origin ${{ github.head_ref }}
           
           ./version.sh "${{ github.event.label.name }}"
           git add -A
