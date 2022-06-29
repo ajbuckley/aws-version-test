@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    if: ${{ github.event.label.name == '*release*' }}
+    if: contains(github.event.label.name, 'release')
     steps:
       - name: Get Merged PR Labels
         id: pr
