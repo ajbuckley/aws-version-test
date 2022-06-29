@@ -39,4 +39,4 @@ jobs:
         id: get_version
       - name: Print version
         run: | 
-          echo "${{ steps.get_version }}"
+          echo "${{ steps.get_version.outputs.version }}"
