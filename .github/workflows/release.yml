@@ -1,14 +1,12 @@
 name: Maven Version on release
 concurrency: "maven-version"
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '**'
+  pull_request:
+    types: [ labeled ]
 jobs:
   build:
     runs-on: ubuntu-20.04
+    if: ${{ github.event.label.name == '*release*' }}
     steps:
       - name: Get Merged PR Labels
         id: pr
