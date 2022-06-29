@@ -16,6 +16,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
+          ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Version
         id: version
@@ -23,7 +24,7 @@ jobs:
           echo "${{ github.event.label.name }}"
           git config --global user.name 'ajbuckley'
           git config --global user.email 'dbuckley@users.noreply.github.com'
-          git pull --rebase=false origin ${{ github.head_ref }}
+          git pull ${{ github.head_ref }}
           
           ./version.sh "${{ github.event.label.name }}"
           git add -A
