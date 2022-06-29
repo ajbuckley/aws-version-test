@@ -4,7 +4,7 @@
 
 	<groupId>ajbuckley.awsversiontest</groupId>
 	<artifactId>aws-version-test</artifactId>
-	<version>5.0.0</version>
+	<version>6.1.0</version>
 	<packaging>pom</packaging>
 
 	<name>Aws Version Test</name>
