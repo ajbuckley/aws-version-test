@@ -1,2 +1,2 @@
 # aws-version-test
-test2
+test3
